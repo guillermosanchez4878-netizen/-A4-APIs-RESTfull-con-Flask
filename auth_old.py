@@ -1,4 +1,4 @@
-# auth.py (Debe estar en la carpeta C:\Users\guill\flask_tr\)
+
 
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user
@@ -8,23 +8,23 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
-# Creación del Blueprint. template_folder apunta a templates/auth/
+
 auth = Blueprint('auth', __name__, template_folder='templates/auth') 
 
-# Definición del formulario de Login
+
 class LoginForm(FlaskForm):
     username = StringField('Usuario', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     remember_me = BooleanField('Recordarme')
     submit = SubmitField('Ingresar')
 
-# Definición del formulario de Registro
+
 class RegistrationForm(FlaskForm):
     username = StringField('Usuario', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Registrar')
 
-# --- Rutas de Autenticación ---
+
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -69,4 +69,5 @@ def login():
 def logout():
     logout_user()
     flash('Has cerrado sesión exitosamente.', 'info')
+
     return redirect(url_for('auth.login'))
