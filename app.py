@@ -8,25 +8,25 @@ from models import User
 
 app = Flask(__name__)
 
-# Configuración de base de datos
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:memo123.@localhost/juegos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'clave_super_segura_12345'
 
-# Inicialización de extensiones
+
 db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth.login'
 
 # Registro de blueprints
 app.register_blueprint(auth_bp, url_prefix="/auth")
-app.register_blueprint(api_bp)  # 👈 API REST registrada
+app.register_blueprint(api_bp) 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# ---------------- RUTAS DE VIDEOJUEGOS (CRUD WEB) ----------------
+
 @app.route("/")
 @app.route("/juegos")
 @login_required
@@ -74,3 +74,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     app.run(port=8000, debug=True)
+
